@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+// <<<<<<< HEAD
 import mongoose from "mongoose";
 
 export const connectDB = async () => {
@@ -13,4 +13,4 @@ export const connectDB = async () => {
     console.log("fail", err);
   }
 };
->>>>>>> 791278a4638196eebb9ec290a9926db209cd791c
+// >>>>>>> 791278a4638196eebb9ec290a9926db209cd791c
