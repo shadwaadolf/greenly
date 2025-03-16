@@ -1,9 +1,16 @@
-import mongoose from 'mongoose'
+<<<<<<< HEAD
+import mongoose from "mongoose";
 
-export const connectDB= async ()=>{
-    await mongoose.connect('mongodb://localhost:27017/saturdaySaraha0').then(res => {
-        console.log("db connected" , res)
-    }).catch(err=>{
-        console.error('fail to connect to DB',err)
-    })
-}
+export const connectDB = async () => {
+  try {
+    await mongoose.connect(
+      "mongodb://localhost:27017/greenlasstt"
+      // { serverSelectionTimeoutMS: 5000 }
+    );
+
+    console.log("db connected");
+  } catch (err) {
+    console.log("fail", err);
+  }
+};
+>>>>>>> 791278a4638196eebb9ec290a9926db209cd791c
