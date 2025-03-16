@@ -12,6 +12,7 @@ const bootstrap = (app, express) => {
   app.get("/", (req, res) => {
     return res.status(200).json({ message: "success" });
   });
+  //salma
 
   app.use("/product", productRouter);
   app.use("/category", categoryRouter);
