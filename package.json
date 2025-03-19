@@ -1,32 +1,38 @@
 {
-<<<<<<< HEAD
-  "name": "mongo2",
-  "version": "1.0.0",
-  "description": "",
-=======
+
   "name": "mongoose",
+
   "version": "1.0.0",
->>>>>>> 791278a4638196eebb9ec290a9926db209cd791c
+
   "main": "index.js",
+
   "type": "module",
+
   "scripts": {
+
     "dev": "node --watch index.js"
+
   },
+
   "keywords": [],
+
   "author": "",
+
   "license": "ISC",
-<<<<<<< HEAD
-  "dependencies": {
-    "bcrypt": "^5.1.1",
-    "express": "^4.21.2",
-    "mongoose": "^8.12.1",
-    "moongoose": "^0.0.5"
-=======
+
   "description": "",
+
   "dependencies": {
+
+    "bcrypt": "^5.1.1",
+
     "dotenv": "^16.4.7",
+
     "express": "^4.21.2",
+
     "mongoose": "^8.12.1"
->>>>>>> 791278a4638196eebb9ec290a9926db209cd791c
+
   }
+
 }
+
