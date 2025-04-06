@@ -1,3 +1,4 @@
+import "dotenv/config";
 import bootstrap from "./src/app.controller.js";
 import express from "express";
 //import bodyParser from "body-parser";

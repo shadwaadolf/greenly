@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 export const connectDB = async () => {
   try {
     await mongoose.connect(
-      "mongodb://localhost:27017/greenlasstt"
+      "mongodb+srv://salma:123@cluster0.fohlf.mongodb.net/greenlasstt"
       // { serverSelectionTimeoutMS: 5000 }
     );
 
