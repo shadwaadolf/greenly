@@ -1,6 +1,6 @@
 import * as categoryServices from "./services/category.services.js";
 import { Router } from "express";
-import { protect, isAdmin } from "../../middleware/authmiddleware.js"
+import { protect, isAdmin } from "../../middleware/authmiddleware.js";
 
 const router = Router();
 
