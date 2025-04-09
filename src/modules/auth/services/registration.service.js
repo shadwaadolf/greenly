@@ -121,7 +121,7 @@ export const signup = async (req, res, next) => {
     const hashPassword = bcrypt.hashSync(password, 8);
 
     // Create new user with role (default to "user" if not specified)
-    const userRole = role?.toLowerCase() === "admin" ? "admin" : "user";
+    const userRole = role?.toLowerCase() === "Admin" ? "Admin" : "User";
 
     const newUser = await userModel.create({
       userName,
