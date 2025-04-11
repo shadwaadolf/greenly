@@ -7,8 +7,11 @@ import cors from "cors";
 
 const app = express();
 const port = 3000;
+app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:4200',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+}));
 app.use(express.json());
 bootstrap(app, express);
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
-app.use(cors());
-app.options("*",cors())
