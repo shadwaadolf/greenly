@@ -108,7 +108,7 @@ const generateToken = (user) => {
 
 export const signup = async (req, res, next) => {
   try {
-    const { userName, email, password, confirmPassword } = req.body;
+    const { userName, email, password, confirmPassword, phone, age } = req.body;
 
     if (password !== confirmPassword) {
       return res.status(400).json({ message: "Password does not match" });
@@ -123,7 +123,9 @@ export const signup = async (req, res, next) => {
       userName,
       email,
       password: hashPassword,
-      role:"User"
+      phone,
+      age,
+      role: "User",
     });
 
     return res.status(201).json({
@@ -133,6 +135,8 @@ export const signup = async (req, res, next) => {
         userName: newUser.userName,
         email: newUser.email,
         role: newUser.role.toLowerCase(),
+        phone: newUser.phone,
+        age: newUser.age,
       },
     });
   } catch (error) {
