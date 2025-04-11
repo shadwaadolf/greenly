@@ -114,7 +114,7 @@ export const signup = async (req, res, next) => {
 
     // Check if the email already exists
     if (await userModel.findOne({ email })) {
-      return res.status(409).json({ message: "This email already exists" });
+      return res.status(409).json({ message: "This email already exist" });
     }
 
     // Hash the password
