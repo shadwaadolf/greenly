@@ -105,7 +105,7 @@ const generateToken = (id, role) => {
 // Signup function
 export const signup = async (req, res, next) => {
   try {
-    const { userName, email, password, confirmPassword, role } = req.body;
+    const { userName, email, password, confirmPassword, role, phone, age } = req.body;
 
     // Check password confirmation
     if (password !== confirmPassword) {
@@ -128,6 +128,8 @@ export const signup = async (req, res, next) => {
       email,
       password: hashPassword,
       role: userRole,
+      phone,
+      age
     });
 
     // Generate token with role
