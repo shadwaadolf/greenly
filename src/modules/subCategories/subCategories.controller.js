@@ -5,11 +5,6 @@ const router = Router();
 
 router.get("/allsubcategories", subCategoryServices.getSubCategory);
 router.get("/subCategory/:id", subCategoryServices.getSubCategoryById);
-router.post(
-  "/addsubCategory",
-  protect,
-  isAdmin,
-  subCategoryServices.createSubCategory
-);
+router.post("/addsubCategory",protect,isAdmin,subCategoryServices.createSubCategory);
 
 export default router;

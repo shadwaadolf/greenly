@@ -1,5 +1,6 @@
 import cart from "../../../DB/model/cartShopping.model.js";
 import product from "../../../DB/model/product.model.js";
+import jwt from "jsonwebtoken";
 
 // export const addToCart = async (req, res) => {
 //   try {
@@ -100,6 +101,21 @@ export const addToCart = async (req, res) => {
 
 export const getCart = async (req, res) => {
   try {
+    // Get the token from the Authorization header
+    const token = req.headers.authorization?.split(" ")[1];
+
+    if (!token) {
+      return res.status(401).json({ message: "No token provided, authorization required" });
+    }
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    
+    // Extract userId from the decoded token
+    const userId = decoded._id;
+    
+    if (!userId) {
+      return res.status(400).json({ message: "User ID not found in token" });
+    }
+
     const cartItems = await cart
       .findOne({ userId })
       .populate("products.productId");

@@ -91,47 +91,40 @@ import userModel from "../../../DB/model/User.model.js";
 import * as bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-// Generate JWT token function
-const generateToken = (id, role) => {
+const generateToken = (user) => {
   const secret = process.env.JWT_SECRET;
   if (!secret) {
     throw new Error("JWT_SECRET is not configured in environment variables");
   }
-  return jwt.sign({ _id: id, role }, secret, {
-    expiresIn: "7d",
-  });
+  return jwt.sign(
+    {
+      _id: user._id,
+      role: user.role,
+    },
+    secret,
+    { expiresIn: "7d" }
+  );
 };
 
-// Signup function
 export const signup = async (req, res, next) => {
   try {
-    const { userName, email, password, confirmPassword, role } = req.body;
+    const { userName, email, password, confirmPassword } = req.body;
 
-    // Check password confirmation
     if (password !== confirmPassword) {
       return res.status(400).json({ message: "Password does not match" });
     }
 
-    // Check if the email already exists
     if (await userModel.findOne({ email })) {
       return res.status(409).json({ message: "This email already exists" });
     }
 
-    // Hash the password
     const hashPassword = bcrypt.hashSync(password, 8);
-
-    // Create new user with role (default to "user" if not specified)
-    const userRole = role?.toLowerCase() === "admin" ? "admin" : "user";
-
     const newUser = await userModel.create({
       userName,
       email,
       password: hashPassword,
-      role: userRole,
+      role:"User"
     });
-
-    // Generate token with role
-    const token = generateToken(newUser._id, userRole);
 
     return res.status(201).json({
       message: "User created successfully",
@@ -139,19 +132,10 @@ export const signup = async (req, res, next) => {
         _id: newUser._id,
         userName: newUser.userName,
         email: newUser.email,
-        role: newUser.role,
+        role: newUser.role.toLowerCase(),
       },
-      token,
     });
   } catch (error) {
-    if (
-      error.message === "JWT_SECRET is not configured in environment variables"
-    ) {
-      return res.status(500).json({
-        message: "Server configuration error",
-        error: "JWT secret is not configured",
-      });
-    }
     return res.status(500).json({
       message: "Error",
       error: error.message,
@@ -160,27 +144,26 @@ export const signup = async (req, res, next) => {
   }
 };
 
-// Login function
 export const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-
-    // Find user by email
     const user = await userModel.findOne({ email });
+
     if (!user) {
       return res.status(404).json({ message: "Invalid email or password" });
     }
 
-    // Check if password matches
     const matchPass = bcrypt.compareSync(password, user.password);
     if (!matchPass) {
       return res.status(404).json({ message: "Invalid email or password" });
     }
 
-    // Generate token with user's role
-    const token = generateToken(user._id, user.role);
+    // Generate token with user data
+    const token = generateToken(user);
 
+    // Return user data and token
     return res.status(200).json({
+      message: "Login successful",
       user: {
         _id: user._id,
         userName: user.userName,
@@ -190,6 +173,7 @@ export const login = async (req, res, next) => {
       token,
     });
   } catch (error) {
+    console.error("Login error:", error);
     return res.status(500).json({
       message: "Error",
       error: error.message,
