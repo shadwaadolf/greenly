@@ -15,7 +15,8 @@ const productSchema = new Schema(
       required: true,
     },
     stock: { type: Number, default: 0, min: 0 },
-    image: { type: String },
+    imageCover: { type: String },
+    images: [{ type: String }],
     ratingAvg: { type: Number, default: 0 },
   },
   { timestamps: true }
