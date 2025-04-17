@@ -1,6 +1,7 @@
 import Product from "../../../DB/model/product.model.js";
-import Category1 from "../../../DB/model/category.model.js";
-import SubCategory1 from "../../../DB/model/subCategories.model.js";
+import Category from "../../../DB/model/category.model.js"
+import SubCategory from "../../../DB/model/subCategories.model.js"
+
 
 export const createProduct = async (req, res) => {
   try {
@@ -12,14 +13,18 @@ export const createProduct = async (req, res) => {
       categoryid, // This is coming from the request body
       subcategoryid,
       stock,
-      image,
+      imageCover,
+      images,
     } = req.body;
-
-    const existofcategory = await Category1.findById(categoryid);
+    if (!Array.isArray(images)) {
+      return res.status(400).json({ message: "Images must be an array" });
+    }
+    console.log("categoryid from req.body:", categoryid);
+    const existofcategory = await Category.findById(categoryid);
     console.log(existofcategory);
     if (!existofcategory)
       return res.status(404).json({ message: "Category not found" });
-    const existingSubcategory = await SubCategory1.findById(subcategoryid);
+    const existingSubcategory = await SubCategory.findById(subcategoryid);
     if (!existingSubcategory)
       return res.status(400).json({ message: "Invalid Subcategory ID" });
 
@@ -36,7 +41,8 @@ export const createProduct = async (req, res) => {
       category: categoryid,
       subCategory: subcategoryid,
       stock,
-      image,
+      imageCover,
+      images,
     });
 
     await product.save();
@@ -49,10 +55,7 @@ export const createProduct = async (req, res) => {
 
 export const getProduct = async (req, res) => {
   try {
-    const products = await Product.find().populate(
-      "category",
-      "shortdescription"
-    );
+    const products = await Product.find().populate("category", "name");
 
     res.status(200).json(products);
   } catch (error) {
@@ -64,7 +67,7 @@ export const getProductById = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id).populate(
       "category",
-      "shortdescription"
+      "name"
     );
 
     if (!product) return res.status(404).json({ message: "Product not found" });

@@ -9,9 +9,14 @@ const productSchema = new Schema(
     longdescription: { type: String, min: 0, max: 1000 },
     price: { type: Number, required: true, min: 0 },
     category: { type: Schema.Types.ObjectId, ref: "Category", required: true },
-    subCategory: { type: Schema.Types.ObjectId, ref: "subcategory", required: true },
+    subCategory: {
+      type: Schema.Types.ObjectId,
+      ref: "subcategory",
+      required: true,
+    },
     stock: { type: Number, default: 0, min: 0 },
-    image: { type: String },
+    imageCover: { type: String },
+    images: [{ type: String }],
     ratingAvg: { type: Number, default: 0 },
   },
   { timestamps: true }

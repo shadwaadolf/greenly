@@ -1,4 +1,4 @@
- import mongoose from "mongoose";
+import mongoose from "mongoose";
 import { Schema } from "mongoose";
 const cartSchema = new Schema(
   {
@@ -30,7 +30,7 @@ cartSchema.pre("save", function (next) {
     0
   );
   next();
- });
+});
 
 const cart = mongoose.model("Cart", cartSchema);
 
